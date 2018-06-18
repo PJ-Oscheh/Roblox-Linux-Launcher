@@ -6,4 +6,7 @@ To use this, run `startChromium.sh`. This will start Chromium and, when it exits
 
 This program requires `chromium-browser` and `wine`. (I tested with the development branch)
 
+## Why you're kicked from the game
+I'm not sure why when one joins they are kicked. However, I believe Roblox's use of "VMProtect" forbids users running non-windows systems to join, as a security measure to prevent cheating. I'm not sure if it's possible to get around this, but if a way pops up I'll work to implement it in this program if need be. For the time being, I'll tweak this program to get it to work as much as possible.
+
 lol I'm just a fello trying to play [Phantom Forces](https://www.roblox.com/games/292439477/Phantom-Forces) on linux
