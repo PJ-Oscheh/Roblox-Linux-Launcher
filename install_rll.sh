@@ -22,11 +22,15 @@ else
 echo "Abort."
 exit 0
 fi
+echo "Making 'startChromium.sh' and 'startRoblox.sh' executable."
+chmod +x ~/roblox-linux-launcher/startChromium.sh
+chmod +x ~/roblox-linux-launcher/startRoblox.sh
 echo "Move 'roblox' to '/usr/bin/' and make it executable? This will allow you to run Roblox from any directory. (y/n)"
 read choice2
 if [[ $choice2 == "y" ]]; then
 sudo cp ./roblox /usr/bin/
 sudo chmod +x /usr/bin/roblox
+echo "Done!"
 else
 echo "Roblox hasn't been added to '/usr/bin'. Please run 'startChromium' from '~/roblox-linux-launcher'"
 echo "Done!"
