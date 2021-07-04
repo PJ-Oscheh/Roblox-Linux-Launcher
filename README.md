@@ -1,4 +1,14 @@
 # Roblox-Linux-Launcher
+
+NEW: IT'S POSSIBLE!!!
+With the release of Wine (development) 6.12, it is now possible to play Roblox on Linux. However, much has changed since the initial release of Roblox-Linux-Launcher - namely, on Ubuntu, Chromium is only availible as a snap, making it more difficult to get the launch argument to start a game (or maybe I'm just missing something?) In addition, I'd like to clean up the launch process.
+
+My plan is to keep the concept the same (start game, get launch argument, open Roblox), but probably use Python instead of Bash (as I'm a bit better with Python anyway).
+
+Stay Tuned!
+
+===
+
 Launch Roblox on Linux (maybe one day?)
 
 (Everything is still in development. Consider nothing to be complete.)
