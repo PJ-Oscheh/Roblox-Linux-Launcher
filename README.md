@@ -18,6 +18,7 @@ With the advent of Wine 6.11, it is now possible to play Roblox on Linux. Roblox
 - Wine 6.11 or greater (currently development branch)
 - Roblox installation **with only one version installed (see above)**
 
-
+## What about other launchers?
+Of course, there are other launchers available to launch Roblox with. It really just comes down to personal preference. At the end of the day, a launcher is a launcher.
 
 lol I'm just a fello trying to play [Phantom Forces](https://www.roblox.com/games/292439477/Phantom-Forces) on linux
