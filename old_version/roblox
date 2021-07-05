@@ -1,3 +1,0 @@
-version=1.0.0-private
-echo $version
-~/roblox-linux-launcher/startChromium.sh

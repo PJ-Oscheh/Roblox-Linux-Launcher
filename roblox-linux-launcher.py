@@ -67,7 +67,9 @@ def launchGame(launcharg):
     current_version = open(f"{home}/roblox-linux-launcher/current_version.txt","r")
     current_version_text = current_version.read()
     current_version.close()
-    launcharg = launcharg[81:-72]
+    trimLaunchArgStart = launcharg.find('roblox-player')
+    trimLaunchArgEnd = launcharg.find('channel:')
+    launcharg = launcharg[trimLaunchArgStart:(trimLaunchArgEnd+8)]
     print(f"Launch Arg: {launcharg}")
     print(f"Current Version Text: {current_version_text}")
     os.system(f'wine "{current_version_text}/RobloxPlayerLauncher.exe" {launcharg}')
