@@ -4,7 +4,7 @@ Launch Roblox on Linux!
 
 (Everything is still in development. Consider nothing to be complete.)
 
-With the advent of Wine 6.11, it is now possible to play Roblox on Linux. Roblox Linux Launcher has been rewritten from the ground up to quickly and easily launch your Roblox games.
+With the release of Wine 6.11, it is now possible to play Roblox on Linux. Roblox Linux Launcher has been rewritten from the ground up to quickly and easily launch your Roblox games.
 
 ## Features:
 - Launch Roblox games quickly and easily
@@ -12,7 +12,7 @@ With the advent of Wine 6.11, it is now possible to play Roblox on Linux. Roblox
 
 *Ensure you only have one version of Roblox installed before using Roblox Linux Launcher. I suggest making a fresh install of Roblox before using this program.
 
-## Dependenceis:
+## Dependencies:
 
 - Google Chrome (Not Chromium)
 - Wine 6.11 or greater (currently development branch)
