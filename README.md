@@ -14,7 +14,7 @@ With the release of Wine 6.11, it is now possible to play Roblox on Linux. Roblo
 
 ## Dependencies:
 
-- Google Chrome (Not Chromium)
+- Google Chrome (Not Chromium) or Brave
 - Wine 6.11 or greater (currently development branch)
 - Roblox installation **with only one version installed (see above)**
 

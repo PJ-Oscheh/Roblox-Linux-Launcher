@@ -1,18 +1,73 @@
+#!/usr/bin/python
 #Roblox Linux Launcher - play Roblox on Linux!
-#You will need Google Chrome (not Chromium!) for this to work. This is because Chrome can log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
+#You will need Google Chrome (not Chromium!) or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
 #There is no need to sign into Chrome if you don't want to.
-#After selecting a game, Chrome will close. Logging will not be enabled for future general Chrome sessions - it only gets enabled in Roblox Linux Launcher.
+#After selecting a game, the browser will close. Logging will not be enabled for future general Chrome sessions - it only gets enabled in Roblox Linux Launcher.
 import os
 import time
 import threading
+from sys import version_info
+from sys import argv 
+from distutils import spawn
+
+if version_info.major < 3:
+    print("Require python version 3")
+    quit()  
+
+class Browser:
+  def __init__(self, p, exe, l, i):
+    self.pgrep_pattern = p
+    self.browser_exe = exe
+    self.log_location = l
+    self.invocation = i
+  def __str__(self):
+    return self.pgrep_pattern
+
+BRAVE = Browser("brave", "brave-browser", "~/.config/BraveSoftware/Brave-Browser/chrome_debug.log",
+        'brave-browser --app --window-size=1280,720 --enable-logging https://www.roblox.com'
+        )
+CHROME = Browser("chrome", "google-chrome-stable", "~/.config/google-chrome/chrome_debug.log",
+        'google-chrome-stable --app=https://www.roblox.com --window-size=1280,720 --enable-logging'
+        )
+
+browser_list = [BRAVE, CHROME]
+launcher_name = argv[0]
+
+def launcher_help():
+    print("Valid browses: " + str([str(webb) for webb in browser_list]))
+    print("Execute examples:")
+    print("To execute the default browser: $ "+launcher_name)
+    print("To execute the brave browser: $ "+launcher_name + " " +
+            BRAVE.pgrep_pattern)
+
+browser = None
+
+if len(argv) == 2:
+    web_browser_type = argv[1]
+    for web_browser in browser_list:
+        if web_browser.pgrep_pattern == web_browser_type:
+            browser = web_browser;
+            break;
+
+    if browser is None:
+        print("Invalid browser selected: " + web_browser_type)
+        launcher_help()
+        quit()
+else:
+    browser = CHROME
+
+if (not spawn.find_executable(browser.browser_exe)):
+    print("Executable does not exist: "+browser.browser_exe);
+    launcher_help()
+    quit()
 
 home = os.getenv("HOME")
-
 rll_version="1.0-alpha"
 
 def getRobloxVersion(): #Roblox version strings seem to be random. To check if Roblox has updated, we see if any new directories have been created. If they have, make that the current directory.
     if os.path.isfile(f"{home}/roblox-linux-launcher/versions.txt") == False:
         print("versions.txt doesn't exist. Generating...")
+        os.mkdir(f"{home}/roblox-linux-launcher")
         newFile = open(f"{home}/roblox-linux-launcher/versions.txt","w")
         newFile.close()
     if os.path.isfile(f"{home}/roblox-linux-launcher/current_version.txt") == False:
@@ -40,27 +95,28 @@ def getRobloxVersion(): #Roblox version strings seem to be random. To check if R
                 print(f"{versions_folder_entries[i]} is now the current version.")
 
 def openRobloxSite():
-    chromeCheck = os.system('pgrep chrome')
+    chromeCheck = os.system(f"pgrep {browser.pgrep_pattern}")
     if chromeCheck != 256:
-        print('Google Chrome is already running. It must be restarted to work with Roblox Linux Launcher. Restart Chrome? (y/N)')
+        print('Web browser is already running. It must be restarted to work with Roblox Linux Launcher. Restart the browser? (y/N)')
         choice = input('>')
         if choice.lower() == "y":
-            os.system('killall chrome')
+            os.system(f"pkill {browser.pgrep_pattern}")
         else:
             exit()
     checkFunction = threading.Thread(target=checkForLaunchArg)
     checkFunction.start()
-    os.system('google-chrome-stable --app=https://www.roblox.com --window-size=1280,720 --enable-logging')
+    os.system(browser.invocation)
     checkFunction.join()
     
-def checkForLaunchArg(): #Check for a launch argument ever 1.5 seconds.
+def checkForLaunchArg(): #Check for a launch argument every 1.5 seconds.
     haveLaunchArg = False
     while haveLaunchArg == False:
         time.sleep(1.5)
-        launcharg = os.popen('grep -i "roblox-player:" ~/.config/google-chrome/chrome_debug.log').read()
+        log_grep = 'grep -i "roblox-player:" ' + browser.log_location
+        launcharg = os.popen(log_grep).read()
         if launcharg != '':
             haveLaunchArg = True
-    os.system('killall chrome')
+    os.system(f"pkill {browser.pgrep_pattern}")
     launchGame(launcharg)
 
 def launchGame(launcharg):
