@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 #Roblox Linux Launcher - play Roblox on Linux!
 #You will need Google Chrome (not Chromium!) or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
 #There is no need to sign into Chrome if you don't want to.
