@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #Roblox Linux Launcher - play Roblox on Linux!
 #You will need Google Chrome or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
 #There is no need to sign into Chrome if you don't want to.
@@ -9,10 +8,6 @@ import threading
 from sys import version_info
 from sys import argv 
 from distutils import spawn
-
-if version_info.major < 3:
-    print("Require python version 3")
-    quit()  
 
 class Browser:
   def __init__(self, p, exe, l, i):
