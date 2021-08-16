@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #Roblox Linux Launcher - play Roblox on Linux!
 #You will need Google Chrome (not Chromium!) or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
 #There is no need to sign into Chrome if you don't want to.
@@ -63,6 +63,9 @@ if (not spawn.find_executable(browser.browser_exe)):
 
 home = os.getenv("HOME")
 rll_version="1.0-alpha"
+wineprefix = os.environ["WINEPREFIX"]
+if len(wineprefix) == 0:
+  wineprefix = "{home}/.wine";
 
 def getRobloxVersion(): #Roblox version strings seem to be random. To check if Roblox has updated, we see if any new directories have been created. If they have, make that the current directory.
     if os.path.isfile(f"{home}/roblox-linux-launcher/versions.txt") == False:
@@ -74,7 +77,7 @@ def getRobloxVersion(): #Roblox version strings seem to be random. To check if R
         print("current_version.txt doesn't exist. Generating...")
         newFile = open(f"{home}/roblox-linux-launcher/current_version.txt","w")
         newFile.close()
-    versions_folder = f"{home}/.wine/drive_c/Program Files (x86)/Roblox/Versions"
+    versions_folder = f"{wineprefix}/drive_c/Program Files (x86)/Roblox/Versions"
     versions_folder_entries = (os.listdir(versions_folder))
     all_versions = open(f"{home}/roblox-linux-launcher/versions.txt","r")
     all_text = all_versions.read()
