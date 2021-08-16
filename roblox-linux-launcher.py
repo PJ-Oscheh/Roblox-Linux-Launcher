@@ -24,7 +24,6 @@ BRAVE = Browser("brave", "brave-browser", "~/.config/BraveSoftware/Brave-Browser
 CHROME = Browser("chrome", "google-chrome-stable", "~/.config/google-chrome/chrome_debug.log",
         'google-chrome-stable --app=https://www.roblox.com --window-size=1280,720 --enable-logging'
         )
-
 CHROMIUM = Browser("chromium", "chromium", "~/.config/chromium/chrome_debug.log",
         'chromium --app=https://www.roblox.com --window-size=1280,720 --enable-logging'
         )
@@ -33,32 +32,41 @@ browser_list = [BRAVE, CHROME, CHROMIUM]
 launcher_name = argv[0]
 
 def launcher_help():
-    print("Valid browses: " + str([str(webb) for webb in browser_list]))
+    print("All browses are supported when " + launcher_name +
+        " is selected as the roblox opening application.")
+    print("Valid browses for independent invocation are: " +
+        str([str(webb) for webb in browser_list]))
     print("Execute examples:")
     print("To execute the default browser: $ "+launcher_name)
     print("To execute the brave browser: $ "+launcher_name + " " +
             BRAVE.pgrep_pattern)
 
 browser = None
+robloxData = None
 
 if len(argv) == 2:
-    web_browser_type = argv[1]
-    for web_browser in browser_list:
-        if web_browser.pgrep_pattern == web_browser_type:
-            browser = web_browser;
-            break;
+    robloxArg = argv[1]
+    if robloxArg.startswith("roblox-player:"):
+        robloxData=robloxArg
+    else:
+        web_browser_type = argv[1]
+        for web_browser in browser_list:
+            if web_browser.pgrep_pattern == web_browser_type:
+                browser = web_browser;
+                break;
 
-    if browser is None:
-        print("Invalid browser selected: " + web_browser_type)
-        launcher_help()
-        quit()
+        if browser is None:
+            print("Invalid browser selected: " + web_browser_type)
+            launcher_help()
+            quit()
 else:
     browser = CHROME
 
-if (not spawn.find_executable(browser.browser_exe)):
-    print("Executable does not exist: "+browser.browser_exe);
-    launcher_help()
-    quit()
+if robloxData is None:
+    if (not spawn.find_executable(browser.browser_exe)):
+        print("Executable does not exist: "+browser.browser_exe);
+        launcher_help()
+        quit()
 
 home = os.getenv("HOME")
 rll_version="1.0-alpha"
@@ -136,4 +144,7 @@ def launchGame(launcharg):
 print(f"Roblox Linux Launcher {rll_version}")
 print('IMPORTANT:When prompted to open with "xdg-open" select "Open". We suggest checking the box to enable this by default.')
 getRobloxVersion()
-openRobloxSite()
+if robloxData is not None:
+  launchGame(robloxData)
+else:
+  openRobloxSite()
