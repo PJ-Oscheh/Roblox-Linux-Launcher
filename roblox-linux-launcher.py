@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #Roblox Linux Launcher - play Roblox on Linux!
-#You will need Google Chrome (not Chromium!) or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
+#You will need Google Chrome or Brave  for this to work. Because we need to log console output using a launch flag, and we can use this to pull our Roblox Launch Arugment.
 #There is no need to sign into Chrome if you don't want to.
 #After selecting a game, the browser will close. Logging will not be enabled for future general Chrome sessions - it only gets enabled in Roblox Linux Launcher.
 import os
@@ -30,7 +30,11 @@ CHROME = Browser("chrome", "google-chrome-stable", "~/.config/google-chrome/chro
         'google-chrome-stable --app=https://www.roblox.com --window-size=1280,720 --enable-logging'
         )
 
-browser_list = [BRAVE, CHROME]
+CHROMIUM = Browser("chromium", "chromium", "~/.config/chromium/chrome_debug.log",
+        'chromium --app=https://www.roblox.com --window-size=1280,720 --enable-logging'
+        )
+
+browser_list = [BRAVE, CHROME, CHROMIUM]
 launcher_name = argv[0]
 
 def launcher_help():
