@@ -70,9 +70,7 @@ if robloxData is None:
 
 home = os.getenv("HOME")
 rll_version="1.0-alpha"
-wineprefix = os.environ["WINEPREFIX"]
-if len(wineprefix) == 0:
-  wineprefix = "{home}/.wine";
+wineprefix = os.getenv("WINEPREFIX","{home}/.wine")
 
 def getRobloxVersion(): #Roblox version strings seem to be random. To check if Roblox has updated, we see if any new directories have been created. If they have, make that the current directory.
     if os.path.isfile(f"{home}/roblox-linux-launcher/versions.txt") == False:
