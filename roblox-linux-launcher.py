@@ -6,9 +6,30 @@ import os
 import time
 import threading
 import logging
+import sys
 from sys import version_info
 from sys import argv 
 from distutils import spawn
+
+#Create a log file local to the module.
+current_module = sys.modules[__name__]
+moduledir=os.path.dirname(current_module.__file__)
+logfile=os.path.join(moduledir, 'robloxLauncher.log')
+print('Check logfile: ' + logfile)
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename=logfile, filemode='w', level=logging.DEBUG)
+
+#Log all unhandled exceptions
+def handle_unhandled_exception(exc_type, exc_value, exc_traceback):
+    """Handler for unhandled exceptions that will write to the logs"""
+    if issubclass(exc_type, KeyboardInterrupt):
+        # call the default excepthook saved at __excepthook__
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    logger.critical("Unhandled exception", exc_info=(exc_type, exc_value, exc_traceback))
+
+sys.excepthook = handle_unhandled_exception
 
 class Browser:
   def __init__(self, p, exe, l, i):
