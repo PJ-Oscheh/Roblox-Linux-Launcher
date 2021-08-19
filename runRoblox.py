@@ -12,6 +12,7 @@ if sys.version_info.major < 3:
 current_module = sys.modules[__name__]
 moduledir=os.path.dirname(current_module.__file__)
 logfile=os.path.join(moduledir, 'robloxLauncher.log')
+print('Check logfile: ' + logfile)
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename=logfile, filemode='w', level=logging.DEBUG)

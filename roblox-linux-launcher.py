@@ -5,6 +5,7 @@
 import os
 import time
 import threading
+import logging
 from sys import version_info
 from sys import argv 
 from distutils import spawn
@@ -70,7 +71,10 @@ if robloxData is None:
 
 home = os.getenv("HOME")
 rll_version="1.0-alpha"
-wineprefix = os.getenv("WINEPREFIX","{home}/.wine")
+wineprefix = os.getenv("WINEPREFIX",f"{home}/.wine")
+if os.path.isfile(wineprefix) == False:
+  logging.critical("WINE does not exist: " + wineprefix)
+  quit()
 
 def getRobloxVersion(): #Roblox version strings seem to be random. To check if Roblox has updated, we see if any new directories have been created. If they have, make that the current directory.
     if os.path.isfile(f"{home}/roblox-linux-launcher/versions.txt") == False:
